@@ -1,30 +1,24 @@
 'use strict'
 
-const path = require('path')
-const utils = require('./utils')
+// const path = require('path')
 const config = require('../config')
+const { env, compilerPublicPath, paths } = config
 const vueLoaderOptions = require('./vue-loader.options')
-
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
-}
 
 module.exports = {
   entry: {
     app: './src/index.js'
   },
   output: {
-    path: config.build.assetsRoot,
+    path: paths.dist(),
     filename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+    publicPath: compilerPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src')
+      '@': paths.src()
     }
   },
   module: {
@@ -33,7 +27,7 @@ module.exports = {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        include: [resolve('src'), resolve('test')],
+        include: [paths.src(), paths.test()],
         options: {
           formatter: require('eslint-friendly-formatter')
         }
@@ -46,14 +40,14 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [paths.src(), paths.test()]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
+          name: paths.assets('img/[name].[hash:7].[ext]')
         }
       },
       {
@@ -61,7 +55,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('media/[name].[hash:7].[ext]')
+          name: paths.assets('media/[name].[hash:7].[ext]')
         }
       },
       {
@@ -69,7 +63,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+          name: paths.assets('fonts/[name].[hash:7].[ext]')
         }
       }
     ]

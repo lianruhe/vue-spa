@@ -2,9 +2,10 @@ import { resolve } from 'path'
 import _debug from 'debug'
 
 const debug = _debug('app:config:base')
+const env = process.env.NODE_ENV || 'development'
 
 const config = {
-  env: process.env.NODE_ENV || 'development',
+  env,
 
   pkg: require('../package.json'),
 
@@ -18,6 +19,7 @@ const config = {
   dir_src: 'src',
   dir_dist: 'dist',
   dir_test: 'test',
+  dir_assets: env ? 'static' : 'assets',
 
   // ----------------------------------
   // Server Configuration
@@ -42,10 +44,10 @@ const config = {
 // Environment
 // ------------------------------------
 config.globals = {
-  'process.env.NODE_ENV': JSON.stringify(config.env),
-  __DEV__: config.env === 'development',
-  __PROD__: config.env === 'production',
-  __TEST__: config.env === 'test'
+  'process.env.NODE_ENV': JSON.stringify(env),
+  __DEV__: env === 'development',
+  __PROD__: env === 'production',
+  __TEST__: env === 'test'
 }
 
 // ------------------------------------
@@ -75,7 +77,8 @@ config.paths = (() => {
     base,
     src: base.bind(null, config.dir_src),
     dist: base.bind(null, config.dir_dist),
-    test: base.bind(null, config.dir_test)
+    test: base.bind(null, config.dir_test),
+    assets: base.bind(null, config.dir_assets)
   }
 })()
 
