@@ -2,6 +2,7 @@ import { resolve } from 'path'
 import _debug from 'debug'
 
 const debug = _debug('app:config:base')
+
 const env = process.env.NODE_ENV || 'development'
 
 const config = {
@@ -15,26 +16,26 @@ const config = {
   // ----------------------------------
   // Project Structure
   // ----------------------------------
-  path_base: resolve(__dirname, '../'),
-  dir_src: 'src',
-  dir_dist: 'dist',
-  dir_test: 'test',
-  dir_assets: env ? 'static' : 'assets',
+  pathBase: resolve(__dirname, '../'),
+  dirSrc: 'src',
+  dirDist: 'dist',
+  dirTest: 'test',
+  dirAssets: env ? 'src/static' : 'src/assets',
 
   // ----------------------------------
   // Server Configuration
   // ----------------------------------
-  server_host: '0.0.0.0', // binds to all hosts
-  server_port: process.env.PORT || 3000,
+  serverHost: '0.0.0.0', // binds to all hosts
+  serverPort: process.env.PORT || 3000,
 
   // ----------------------------------
   // Compiler Configuration
   // ----------------------------------
-  compiler_devtool: 'source-map',
-  compiler_hash_type: 'hash',
-  compiler_html_minify: false,
-  compiler_public_path: '/',
-  compiler_vendor: [
+  compilerDevtool: 'source-map',
+  compilerHashType: 'hash',
+  compilerHtmlMinify: false,
+  compilerPublicPath: '/',
+  compilerVendor: [
     'vue',
     'vue-router'
   ]
@@ -44,16 +45,16 @@ const config = {
 // Environment
 // ------------------------------------
 config.globals = {
-  'process.env.NODE_ENV': JSON.stringify(env),
-  __DEV__: env === 'development',
-  __PROD__: env === 'production',
-  __TEST__: env === 'test'
+  'process.env.NODE_ENV': JSON.stringify(config.env),
+  __DEV__: config.env === 'development',
+  __PROD__: config.env === 'production',
+  __TEST__: config.env === 'test'
 }
 
 // ------------------------------------
 // Validate Vendor Dependencies
 // ------------------------------------
-config.compiler_vendor = config.compiler_vendor
+config.compilerVendor = config.compilerVendor
   .filter(dep => {
     if (config.pkg.dependencies.hasOwnProperty(dep)) {
       return true
@@ -71,14 +72,14 @@ config.compiler_vendor = config.compiler_vendor
 // ------------------------------------
 config.paths = (() => {
   const base = (...args) =>
-    resolve.apply(resolve, [config.path_base, ...args])
+    resolve.apply(resolve, [config.pathBase, ...args])
 
   return {
     base,
-    src: base.bind(null, config.dir_src),
-    dist: base.bind(null, config.dir_dist),
-    test: base.bind(null, config.dir_test),
-    assets: base.bind(null, config.dir_assets)
+    src: base.bind(null, config.dirSrc),
+    dist: base.bind(null, config.dirDist),
+    test: base.bind(null, config.dirTest),
+    assets: base.bind(null, config.dirAssets)
   }
 })()
 

@@ -2,15 +2,15 @@
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const config = require('../config')
-const isProduction = config.env === 'production'
+const { __PROD__ } = config.globals
 
 // generate loader string to be used with extract text plugin
 function generateLoaders (loader, loaderOptions) {
-  const sourceMap = isProduction
+  const sourceMap = __PROD__
   const loaders = [{
     loader: 'css-loader',
     options: {
-      minimize: isProduction,
+      minimize: __PROD__,
       sourceMap
     }
   }]
@@ -26,7 +26,7 @@ function generateLoaders (loader, loaderOptions) {
 
   // Extract CSS when that option is specified
   // (which is the case during production build)
-  if (isProduction) {
+  if (__PROD__) {
     return ExtractTextPlugin.extract({
       use: loaders,
       fallback: 'vue-style-loader'

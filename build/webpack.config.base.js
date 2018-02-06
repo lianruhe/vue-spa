@@ -1,8 +1,7 @@
 'use strict'
 
-// const path = require('path')
 const config = require('../config')
-const { env, compilerPublicPath, paths } = config
+const { compilerPublicPath, paths } = config
 const vueLoaderOptions = require('./vue-loader.options')
 
 module.exports = {
