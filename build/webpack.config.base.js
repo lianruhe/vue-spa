@@ -2,7 +2,8 @@
 
 const config = require('../config')
 const { compilerPublicPath, paths } = config
-const vueLoaderOptions = require('./vue-loader.options')
+// const vueLoaderOptions = require('./vue-loader.options')
+const postcssOptions = require('./postcss.options')
 
 module.exports = {
   entry: {
@@ -34,12 +35,25 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: vueLoaderOptions
+        options: {
+          postcss: postcssOptions,
+          autoprefixer: false,
+          loaders: {
+            js: 'babel-loader'
+          },
+          // 必须为 true，否则 vue-loader@12.0.0 会导致 css 加载顺序混乱
+          extractCSS: true
+        }
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [paths.src(), paths.test()]
+      },
+      {
+        test: /\.css$/,
+        loader: 'postcss-loader',
+        options: postcssOptions
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
