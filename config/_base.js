@@ -1,5 +1,7 @@
-import { resolve } from 'path'
-import _debug from 'debug'
+const { resolve } = require('path')
+const _debug = require('debug')
+// import { resolve } from 'path'
+// import _debug from 'debug'
 
 const debug = _debug('app:config:base')
 
@@ -83,4 +85,4 @@ config.paths = (() => {
   }
 })()
 
-export default config
+module.exports = config

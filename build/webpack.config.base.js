@@ -1,7 +1,8 @@
-'use strict'
+// require('babel-register')
 
 const config = require('../config')
-const { compilerPublicPath, paths } = config
+const compilerPublicPath = config.compilerPublicPath
+const paths = config.paths
 // const vueLoaderOptions = require('./vue-loader.options')
 const postcssOptions = require('./postcss.options')
 

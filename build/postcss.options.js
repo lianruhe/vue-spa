@@ -1,5 +1,4 @@
-const config = require('../config')
-const paths = config.paths
+const { paths } = require('../config')
 const browsers = 'Android >= 4, iOS >= 7'
 
 module.exports = {
@@ -22,10 +21,10 @@ module.exports = {
       }
     }),
     // 如果不需要 flexible，请移除
-    require('postcss-pxtorem')({
-      rootValue: 100,
-      propWhiteList: []
-    }),
+    // require('postcss-pxtorem')({
+    //   rootValue: 100,
+    //   propWhiteList: []
+    // }),
     // PostCSS plugin for RTL-optimizations
     // require('postcss-rtl')({
     //   // Custom function for adding prefix to selector. Optional.

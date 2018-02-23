@@ -1,6 +1,9 @@
-import fs from 'fs'
-import _debug from 'debug'
-import config from './_base'
+const fs = require('fs')
+const _debug = require('debug')
+const config = require('./_base')
+// import fs from 'fs'
+// import _debug from 'debug'
+// import config from './_base'
 
 const debug = _debug('app:config')
 debug('Create configuration.')
@@ -28,4 +31,4 @@ if (hasOverridesFile) {
   debug(`No configuration overrides found for NODE_ENV "${config.env}"`)
 }
 
-export default { ...config, ...overrides }
+module.exports = Object.assign({}, config, overrides)

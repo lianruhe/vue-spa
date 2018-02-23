@@ -4,7 +4,6 @@ const fs = require('fs')
 const path = require('path')
 const utils = require('./utils')
 const webpack = require('webpack')
-const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.config.base')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -14,7 +13,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const loadMinified = require('./load-minified')
 
-const { env, globals, paths, compilerDevtool } = config
+const { env, globals, paths, compilerDevtool } = require('../config')
 
 const webpackConfig = merge(baseWebpackConfig, {
   // module: {
