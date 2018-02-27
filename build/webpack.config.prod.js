@@ -22,7 +22,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   //     extract: true
   //   })
   // },
-  devtool: compilerDevtool,
+  // devtool: compilerDevtool,
   // output: {
   //   path: paths.dist(),
   //   filename: utils.assetsPath('js/[name].[chunkhash].js'),

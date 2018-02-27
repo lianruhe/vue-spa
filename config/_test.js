@@ -1,23 +1,23 @@
 import { argv } from 'yargs'
 
-const coverage_enabled = !argv.watch
+const coverageEnabled = !argv.watch
 
-const coverage_reporters = [
+const coverageReporters = [
   { type: 'lcov' }
 ]
 
-if (coverage_enabled) {
-  coverage_reporters.push(
+if (coverageEnabled) {
+  coverageReporters.push(
     { type: 'json-summary', file: 'lcov.json' }
   )
 } else {
-  coverage_reporters.push(
+  coverageReporters.push(
     { type: 'text-summary' }
   )
 }
 
 export default config => ({
-  compiler_devtool: 'inline-source-map',
-  coverage_enabled,
-  coverage_reporters
+  compilerDevtool: 'inline-source-map',
+  coverageEnabled,
+  coverageReporters
 })

@@ -1,18 +1,16 @@
-// require('babel-register')
 const webpack = require('webpack')
-const config = require('../config')
-const compilerPublicPath = config.compilerPublicPath
-const paths = config.paths
+const { env, paths, compilerHashType, compilerPublicPath, compilerVendor, compilerDevtool } = require('../config')
 // const vueLoaderOptions = require('./vue-loader.options')
 const postcssOptions = require('./postcss.options')
 
 module.exports = {
   entry: {
-    app: './src/index.js'
+    app: './src/index.js',
+    vendor: compilerVendor
   },
   output: {
     path: paths.dist(),
-    filename: '[name].js',
+    filename: `[name].[${compilerHashType}].js`,
     publicPath: compilerPublicPath
   },
   resolve: {
@@ -22,6 +20,7 @@ module.exports = {
       '@': paths.src()
     }
   },
+  devtool: compilerDevtool,
   module: {
     rules: [
       {
@@ -38,7 +37,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           postcss: postcssOptions,
-          autoprefixer: false,
+          // autoprefixer: false,
           loaders: {
             js: 'babel-loader'
           }
@@ -84,7 +83,10 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(config.env)
+      'process.env.NODE_ENV': JSON.stringify(env)
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor']
     })
   ]
 }

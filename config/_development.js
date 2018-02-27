@@ -1,3 +1,3 @@
 module.exports = config => ({
-  compiler_devtool: 'eval'
+  compilerDevtool: '#cheap-module-eval-source-map'
 })
