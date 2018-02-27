@@ -1,5 +1,5 @@
 // require('babel-register')
-
+const webpack = require('webpack')
 const config = require('../config')
 const compilerPublicPath = config.compilerPublicPath
 const paths = config.paths
@@ -16,7 +16,7 @@ module.exports = {
     publicPath: compilerPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.css', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': paths.src()
@@ -41,9 +41,9 @@ module.exports = {
           autoprefixer: false,
           loaders: {
             js: 'babel-loader'
-          },
+          }
           // 必须为 true，否则 vue-loader@12.0.0 会导致 css 加载顺序混乱
-          extractCSS: true
+          // extractCSS: true
         }
       },
       {
@@ -81,5 +81,10 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(config.env)
+    })
+  ]
 }
